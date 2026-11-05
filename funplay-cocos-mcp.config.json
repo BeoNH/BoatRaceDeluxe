@@ -1,0 +1,27 @@
+{
+  "host": "127.0.0.1",
+  "port": 25094,
+  "portMode": "project",
+  "clientConfigEntries": {
+    "claude_code": {
+      "serverName": "cocos-boatracedelu-f00d7a",
+      "url": "http://127.0.0.1:25094/mcp/project/f00d7a36bfb053a58fb44316/",
+      "configPath": "C:\\Users\\hoang\\.claude.json",
+      "projectIdentity": "f00d7a36bfb053a58fb44316"
+    }
+  },
+  "toolProfile": "full",
+  "enabledTools": [],
+  "disabledTools": [],
+  "enabledToolCategories": [],
+  "disabledToolCategories": [],
+  "enableSessions": false,
+  "enableConsoleLogging": true,
+  "executeJavascriptSafetyChecks": true,
+  "autostart": true,
+  "maxInteractionLogEntries": 50,
+  "lastClientTargetId": "claude_code",
+  "activeToolProfileName": "",
+  "savedToolProfiles": [],
+  "language": "auto"
+}

@@ -1,0 +1,33 @@
+
+#///////////////////////////
+# Cocos Creator 3D Project
+#///////////////////////////
+library/
+temp/
+local/
+build/
+profiles/
+native
+#//////////////////////////
+# NPM
+#//////////////////////////
+node_modules/
+
+#//////////////////////////
+# VSCode
+#//////////////////////////
+.vscode/
+
+#//////////////////////////
+# WebStorm
+#//////////////////////////
+.idea/
+_original_crawl/
+
+# bake cache
+.claude/tools/bake/.cache/
+
+# project-map
+.claude/map/_scan.*
+.claude/map/meta.json
+.claude/map/HANDOFF.md
