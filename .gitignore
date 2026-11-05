@@ -31,3 +31,6 @@ _original_crawl/
 .claude/map/_scan.*
 .claude/map/meta.json
 .claude/map/HANDOFF.md
+
+# tool output (debug)
+tools/out/

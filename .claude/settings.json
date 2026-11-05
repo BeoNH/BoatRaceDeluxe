@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "mcp__cocos"
+    ],
+    "deny": [
+      "Read(./library/**)",
+      "Read(./temp/**)",
+      "Read(./local/**)",
+      "Read(./build/**)",
+      "Read(./native/**)",
+      "Read(./profiles/**)",
+      "Read(./**/*.meta)",
+      "Read(./**/*.prefab)",
+      "Read(./**/*.scene)",
+      "Read(./**/*.anim)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}
