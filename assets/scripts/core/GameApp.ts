@@ -43,15 +43,17 @@ export class GameApp extends Component {
         Input.onFirstPointer(this, () => Sfx.startMusic()); // §4.1 autoplay policy
 
         const loading = makeLabel(this.stage, 'Loading...', 400, 205, { size: 28, name: 'loading' });
-        Res.load((err) => {
-            loading.destroy();
+        Res.load(async (err) => {
             if (err) {
+                loading.destroy();
                 makeLabel(this.stage, 'Load failed', 400, 205, { size: 28, name: 'loadFailed' });
                 return;
             }
+            await Api.login(); // lỗi => OFFLINE (userName rỗng); Save theo username nên phải login trước
+            loading.destroy();
+            Save.load(Api.userName); // nạp lại theo user (Sfx đọc Save.data bên dưới)
             Sfx.apply();
             Sfx.onResReady();
-            void Api.login(); // không chặn boot; lỗi => OFFLINE (userName rỗng)
             this.show('intro');
         });
     }

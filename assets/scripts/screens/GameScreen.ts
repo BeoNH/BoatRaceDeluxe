@@ -1,4 +1,4 @@
-import { Node, UIOpacity, UITransform, _decorator } from 'cc';
+import { Label, Node, UIOpacity, UITransform, _decorator } from 'cc';
 import { buildMask } from '../data/LevelData';
 import { GameSim } from '../game/Sim';
 import { Api } from '../core/Api';
@@ -33,6 +33,8 @@ export class GameScreen extends BaseScreen {
     private arrowNode!: Node;
     private barNode!: Node;
     private barClip!: Node;
+    private scoreTxt!: Label;
+    private lastScore = -1;
 
     onLoad(): void {
         const root = this.node;
@@ -85,8 +87,10 @@ export class GameScreen extends BaseScreen {
         makeSprite(root, 'hud_bar', 0, 1);
         makeSprite(root, 'hud_badge', 26.2, 5.3);
         makeLabel(root, 'LEVEL: ' + this.level, 92.5, 10, { size: 28, color: '#99FFFF', name: 'levelTxt' });
-        addSoundButtons(root, this, 519.3, 25.9, 567.7, 25.9, 0.484);
-        makeButton(root, this, { up: 'btn_menu_up', over: 'btn_menu_over' }, 615.8, 25.7, {
+        // 3 icon sát lề phải, lề phải = lề trái của badge (26.2); icon rộng 96*0.484≈46.5, bước 48.4
+        this.scoreTxt = makeLabel(root, 'SCORE: ' + this.sim.score(), 400, 10, { size: 28, color: '#FFFF99', name: 'scoreTxt' }).getComponent(Label)!;
+        addSoundButtons(root, this, 654.4, 25.9, 702.8, 25.9, 0.484);
+        makeButton(root, this, { up: 'btn_menu_up', over: 'btn_menu_over' }, 751.2, 25.7, {
             name: 'btnMenu', sx: 0.484, ox: 46, oy: 48,
             onClick: () => this.openConfirm(),
         });
@@ -132,7 +136,9 @@ export class GameScreen extends BaseScreen {
                 const score = this.sim.score();
                 Session.lastScore = score;
                 Save.recordWin(this.level, score); // §5.6
-                Api.saveScore(score, this.sim.tickCount / 24); // 1 lần/ván thắng (endDelay chặn lặp)
+                // Điểm theo level: tạm tắt. Chỉ lưu Total score lên server (1 lần/ván thắng, endDelay chặn lặp)
+                // Api.saveScore(score, this.sim.tickCount / 24);
+                Api.saveScore(Save.total(), this.sim.tickCount / 24);
                 this.endDelay = WIN_DELAY_TICKS;
             } else {
                 this.endDelay = LOSE_DELAY_TICKS;
@@ -156,6 +162,11 @@ export class GameScreen extends BaseScreen {
         if (a.visible) {
             this.arrowNode.setPosition(a.x, -a.y, 0);
             this.arrowNode.angle = -a.rot;
+        }
+        const sc = s.score(); // §5.6 realtime
+        if (sc !== this.lastScore) {
+            this.lastScore = sc;
+            this.scoreTxt.string = 'SCORE: ' + sc;
         }
         const b = s.powerBar;
         this.barNode.active = b.visible;

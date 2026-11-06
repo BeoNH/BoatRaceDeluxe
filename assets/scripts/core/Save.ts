@@ -20,11 +20,14 @@ function defaults(): SaveData {
 /** Owner: GameApp (gọi Save.load() ở Boot). */
 export class Save {
     static data: SaveData = defaults();
+    private static key = KEY;
 
-    static load(): void {
+    /** user rỗng (offline/chưa login) => key gốc `sharedObject`; có user => `sharedObject:<user>`. */
+    static load(user = ''): void {
+        Save.key = user ? KEY + ':' + user : KEY;
         let d = defaults();
         try {
-            const raw = sys.localStorage.getItem(KEY);
+            const raw = sys.localStorage.getItem(Save.key);
             if (raw) {
                 const o = JSON.parse(raw);
                 if (o && typeof o === 'object') {
@@ -50,7 +53,7 @@ export class Save {
 
     static save(): void {
         try {
-            sys.localStorage.setItem(KEY, JSON.stringify(Save.data));
+            sys.localStorage.setItem(Save.key,JSON.stringify(Save.data));
         } catch (e) { /* localStorage không dùng được: bỏ qua */ }
     }
 
