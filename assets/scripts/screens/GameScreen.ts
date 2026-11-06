@@ -1,6 +1,7 @@
 import { Node, UIOpacity, UITransform, _decorator } from 'cc';
 import { buildMask } from '../data/LevelData';
 import { GameSim } from '../game/Sim';
+import { Api } from '../core/Api';
 import { Input } from '../core/Input';
 import { Res } from '../core/Res';
 import { Save } from '../core/Save';
@@ -131,6 +132,7 @@ export class GameScreen extends BaseScreen {
                 const score = this.sim.score();
                 Session.lastScore = score;
                 Save.recordWin(this.level, score); // §5.6
+                Api.saveScore(score, this.sim.tickCount / 24); // 1 lần/ván thắng (endDelay chặn lặp)
                 this.endDelay = WIN_DELAY_TICKS;
             } else {
                 this.endDelay = LOSE_DELAY_TICKS;

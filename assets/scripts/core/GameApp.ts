@@ -6,6 +6,7 @@ import { LevelFailedScreen } from '../screens/LevelFailedScreen';
 import { LevelSelectScreen } from '../screens/LevelSelectScreen';
 import { LevelUpScreen } from '../screens/LevelUpScreen';
 import { WinScreen } from '../screens/WinScreen';
+import { Api } from './Api';
 import { Input } from './Input';
 import { Res } from './Res';
 import { Save } from './Save';
@@ -50,6 +51,7 @@ export class GameApp extends Component {
             }
             Sfx.apply();
             Sfx.onResReady();
+            void Api.login(); // không chặn boot; lỗi => OFFLINE (userName rỗng)
             this.show('intro');
         });
     }

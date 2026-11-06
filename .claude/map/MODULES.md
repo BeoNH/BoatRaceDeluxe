@@ -5,6 +5,7 @@ Role: boot, screen manager, singletons dùng chung.
 Key files: `GameApp.ts` (Component duy nhất có update; accumulator 1/24 s, `MAX_FRAME_DT=0.25`), `Res.ts` (cache SpriteFrame/AudioClip/JSON từ `resources`, `Res.sprite/clip/json/level/maskRle`), `Save.ts` (`Save.data`, `load/save/isUnlocked/total/recordWin`), `Sfx.ts` (2 AudioSource: music loop 0.6 + sfx one-shot; `startMusic` chờ pointer đầu + clip sẵn, `onResReady`, `apply` cho mute), `Input.ts` (pointer down/up/cancel theo node, `on/offAll/onFirstPointer`), `UIKit.ts` (`makeNode/makeSprite/makeLabel/setLabel/makeButton/makeHit`; toạ độ gốc trên-trái, truyền (x,y) CreateJS).
 Depends on: screens (GameApp), data (Res) | Used by: mọi màn.
 Gotchas: static state có owner = GameApp (`onDestroy` reset Input/Sfx/Session). Không tạo SpriteFrame runtime.
+Network (user yêu cầu, ghi đè "không API"): `NetworkManager.ts` (copy từ BoatDriver) + `Api.ts` (`userName`, `login/saveScore/getRankList/getHistory`; offline khi userName rỗng). `Api.login()` gọi ở boot, `Api.saveScore` gọi khi thắng ở GameScreen.
 
 ## screens — `assets/scripts/screens`
 Role: các màn hình, dựng node từ code bằng UIKit.

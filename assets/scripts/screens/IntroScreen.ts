@@ -3,6 +3,8 @@ import { Input } from '../core/Input';
 import { Save } from '../core/Save';
 import { makeButton, makeLabel, makeSprite } from '../core/UIKit';
 import { BaseScreen, Session } from './BaseScreen';
+import { PopupHistory } from './PopupHistory';
+import { PopupRank } from './PopupRank';
 import { addSoundButtons } from './SoundButtons';
 const { ccclass } = _decorator;
 
@@ -24,6 +26,14 @@ export class IntroScreen extends BaseScreen {
                 this.go('levelSelect');
             },
         });
+        // Rank / History: cùng hàng + cùng cỡ Play (180x54), chữ nướng sẵn trong ảnh (font Passion One như btn_play)
+        const side = (key: string, x: number, name: string, onClick: () => void) => {
+            makeButton(root, this, { up: `btn_${key}_up`, over: `btn_${key}_over`, down: `btn_${key}_down` }, x, 410.2, {
+                name, ox: 90, oy: 25, onClick,
+            });
+        };
+        side('rank', 313.5, 'btnRank', () => { PopupRank.open(root); });
+        side('history', 501.5, 'btnHistory', () => { PopupHistory.open(root); });
     }
 
     onDestroy(): void { Input.offAll(this); }
